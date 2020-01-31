@@ -2,24 +2,17 @@
 from math import gcd
 def find_k1k2g(a,b,g=1):
     found = a-b==g or b-a==g
-    ka=1
-    kb=1
-    a0 = a
-    b0 = b
+    ka,kb,a0,b0=1,1,a,b
     if found:
        if a<b : ka = -1
        else: kb = -1
     while not found:
         if a0<b0 : 
             k = b0//a
-            ka = (k+1)
-            a0 = ka *a
-            kb = -kb
+            ka,a0,kb  = (k+1) , (k+1) *a, -kb
         else:
             k = a0//b
-            kb = k+1
-            b0= kb *b
-            ka = -ka
+            kb,b0,ka = k+1, (k+1) *b, -ka
         found = a0-b0==g or b0-a0==g
     return (ka,kb)
    
@@ -37,15 +30,19 @@ def print_good_array(arr):
     
     if g0 ==1 :    
         multiplier= 1
-        while (len(multiples) > 1) :
-            (k1,k2) = multiples.pop()
-            i -=1 
-            print(k2*multiplier,"*", arr[i], "+ " )
-            multiplier*=k1
         (k1,k2) = multiples.pop()
-        print(k2*multiplier,"*", arr[i-1], "+ ", k1*multiplier , "*",arr[i-2] )
+        while multiples :
+            i -=1 
+            if k2*multiplier>0 : print("+", end="")
+            print(k2*multiplier,"*", arr[i] )
+            multiplier*=k1
+            (k1,k2) = multiples.pop()
+        if k2*multiplier>0 : print("+", end="")
+        print(k2*multiplier,"*", arr[i-1])
+        if k1*multiplier>0 : print("+", end="")
+        print( k1*multiplier , "*",arr[i-2] )
     else:
         print("Bad Array")
         
 if __name__ == "__main__" :
-    print_good_array( [77,91,7,143,175])
+    print_good_array( [77,91,143,175])
