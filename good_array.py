@@ -15,7 +15,11 @@ def find_k1k2g(a,b,g=1):
             kb,b0,ka = k+1, (k+1) *b, -ka
         found = a0-b0==g or b0-a0==g
     return (ka,kb)
-   
+
+def prn(x,y):
+    if x>0 : print("+", end="")
+    print(x,"*", y )
+
 def print_good_array(arr):
     multiples = []
     g0=gcd(arr[0],arr[1])
@@ -27,20 +31,17 @@ def print_good_array(arr):
         else: multiples.append(find_k1k2g(g0,arr[i],g1))
         g0=g1
         i+=1
-    
+      
     if g0 ==1 :    
         multiplier= 1
         (k1,k2) = multiples.pop()
         while multiples :
             i -=1 
-            if k2*multiplier>0 : print("+", end="")
-            print(k2*multiplier,"*", arr[i] )
+            prn(k2*multiplier, arr[i] )
             multiplier*=k1
             (k1,k2) = multiples.pop()
-        if k2*multiplier>0 : print("+", end="")
-        print(k2*multiplier,"*", arr[i-1])
-        if k1*multiplier>0 : print("+", end="")
-        print( k1*multiplier , "*",arr[i-2] )
+        prn(k2*multiplier,arr[i-1])
+        prn( k1*multiplier , arr[i-2] )
     else:
         print("Bad Array")
         
